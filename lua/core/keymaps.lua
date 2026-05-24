@@ -37,24 +37,12 @@ keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close a tab
 keymap.set("n", "<leader>tn", ":tabn<CR>")     -- next tab
 keymap.set("n", "<leader>tp", ":tabp<CR>")     -- previous tab
 
--- Diff keymaps
--- keymap.set("n", "<leader>cc", ":diffput<CR>")   -- put diff from current to other during diff
--- keymap.set("n", "<leader>cj", ":diffget 1<CR>") -- get diff from left (local) during merge
--- keymap.set("n", "<leader>ck", ":diffget 3<CR>") -- get diff from right (remote) during merge
--- keymap.set("n", "<leader>cn", "]c")             -- next diff hunk
--- keymap.set("n", "<leader>cp", "[c")             -- previous diff hunk
 
 -- UndoTree
 keymap.set("n", "<leader>u", ":UndotreeToggle<CR>") -- toggle undo tree
 
--- Quickfix keymaps
--- keymap.set("n", "<leader>qo", ":copen<CR>")  -- open quickfix list
--- keymap.set("n", "<leader>qf", ":cfirst<CR>") -- jump to first quickfix list item
--- keymap.set("n", "<leader>qn", ":cnext<CR>")  -- jump to next quickfix list item
--- keymap.set("n", "<leader>qp", ":cprev<CR>")  -- jump to prev quickfix list item
--- keymap.set("n", "<leader>ql", ":clast<CR>")  -- jump to last quickfix list item
--- keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
-
+-- Fzf Lua
+keymap.set('n', '<leader>fl', ":FzfLua<CR>", {})
 
 -- Copilot
 -- vim.api.nvim_set_keymap('n', '<leader>ct', [[:lua ToggleCopilot()<CR>]], { noremap = true, silent = true })
@@ -69,13 +57,6 @@ keymap.set("n", "<leader>u", ":UndotreeToggle<CR>") -- toggle undo tree
 --     print("Copilot enabled")
 --   end
 -- end
-
--- Vim-maximizer
--- keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle maximize tab
-
--- Alpha dashboard
--- keymap.set("n", "<leader>h", ":Alpha<CR>") -- toggle maximize tab
-
 
 -- Telescope
 -- keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, {})                                                    -- fuzzy find files in project
