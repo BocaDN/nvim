@@ -12,4 +12,4 @@ require("oil").setup({
     -- "mtime",
   },
 })
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+vim.keymap.set("n", "-", "<CMD>Oil --preview<CR>", { desc = "Open parent directory" })
