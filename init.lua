@@ -9,10 +9,11 @@ require("vim._core.ui2").enable({})
 require("pack")
 require("lsp")
 
+require("plugins.commentary-vim")
+require("plugins.fzf")
 require("plugins.mason")
 require("plugins.oil")
-require("plugins.fzf")
-require("plugins.commentary-vim")
+require("plugins.toggleterm")
 
 -- require("plugins.colorschemes.everforest") -- does not work
 
