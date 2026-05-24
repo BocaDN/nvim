@@ -11,7 +11,6 @@ require("lsp")
 
 require("plugins.commentary-vim")
 require("plugins.fzf")
-require("plugins.mason")
 require("plugins.oil")
 require("plugins.toggleterm")
 
