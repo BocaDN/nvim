@@ -5,8 +5,6 @@ local keymap = vim.keymap
 
 keymap.set("n", "<leader><leader>", ":noh<CR>") -- clear selection
 
-vim.keymap.set("n", "<leader>ts", ":Huez<CR>")
-
 -- Buffer next/previous
 keymap.set("n", "<leader>bp", vim.cmd.bp)
 keymap.set("n", "<leader>bn", vim.cmd.bn)
@@ -41,8 +39,6 @@ keymap.set("n", "<leader>tp", ":tabp<CR>")     -- previous tab
 -- UndoTree
 keymap.set("n", "<leader>u", ":UndotreeToggle<CR>") -- toggle undo tree
 
--- Fzf Lua
-keymap.set('n', '<leader>fl', ":FzfLua<CR>", {})
 
 -- Copilot
 -- vim.api.nvim_set_keymap('n', '<leader>ct', [[:lua ToggleCopilot()<CR>]], { noremap = true, silent = true })
@@ -57,6 +53,14 @@ keymap.set('n', '<leader>fl', ":FzfLua<CR>", {})
 --     print("Copilot enabled")
 --   end
 -- end
+
+-- Fzf Lua
+keymap.set('n', '<leader>fl', ":FzfLua<CR>", {})
+keymap.set('n', '<leader>ff', ":FzfLua files<CR>", {})
+keymap.set('n', '<leader>fg', ":FzfLua live_grep<CR>", {})
+keymap.set('n', '<leader>fb', ":FzfLua buffers<CR>", {})
+keymap.set('n', '<leader>fz', ":FzfLua grep_curbuf<CR>", {})
+keymap.set('n', '<leader>fs', ":FzfLua lsp_document_symbols<CR>", {})
 
 -- Telescope
 -- keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, {})                                                    -- fuzzy find files in project
