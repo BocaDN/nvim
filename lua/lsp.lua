@@ -1,117 +1,57 @@
--- =========================
--- Completion settings
--- =========================
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+-- Remove global default key mapping
+vim.keymap.del("n", "grn")
+vim.keymap.del("n", "gra")
+vim.keymap.del("n", "grr")
+vim.keymap.del("n", "gri")
+vim.keymap.del("n", "gO")
 
--- =========================
--- LSP completion (Neovim 0.11+ / 0.12+)
--- =========================
--- vim.api.nvim_create_autocmd("LspAttach", {
---   group = vim.api.nvim_create_augroup("lsp_completion", { clear = true }),
-
---   callback = function(args)
---     local client = vim.lsp.get_client_by_id(args.data.client_id)
---     if client and client:supports_method("textDocument/completion") then
---       vim.lsp.completion.enable(true, client.id, args.buf)
---     end
---   end,
--- })
-
+-- Create new keymapping for lsps
+-- LspAttach: After an LSP Client performs "initialize" and attaches to a buffer.
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("lsp_completion", { clear = true }),
+	callback = function(args)
+		local keymap = vim.keymap
+		local lsp = vim.lsp
+		local bufopts = { noremap = true, silent = true }
 
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if not client then return end
+		keymap.set("n", "gr", lsp.buf.references, bufopts)
+		keymap.set("n", "gd", lsp.buf.definition, bufopts)
+		keymap.set("n", "<space>rn", lsp.buf.rename, bufopts)
+		keymap.set("n", "K", lsp.buf.hover, bufopts)
+		keymap.set({ "n", "v" }, "<space>f", function()
+			local mode = vim.api.nvim_get_mode().mode
 
-    if client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, args.buf, {
-        autotrigger = true,
-      })
-
-      -- IMPORTANT: required for fallback completion system
-      vim.bo[args.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-    end
-  end,
-})
--- =========================
--- LSP servers
--- =========================
-local lsp_servers = {
-  "pyright",   -- Python type checking / IntelliSense
-  "ruff",      -- linting + formatting
-  "clangd",
-  "lua_ls",
-}
-
--- =========================
--- Plugins
--- =========================
-vim.pack.add({
-  "https://github.com/neovim/nvim-lspconfig",
-  "https://github.com/mason-org/mason.nvim",
-  "https://github.com/mason-org/mason-lspconfig.nvim",
-})
-
-require("mason").setup()
-
-require("mason-lspconfig").setup({
-  ensure_installed = lsp_servers,
-  automatic_enable = false,
+			if vim.startswith(string.lower(mode), "v") then
+				require("conform").format({ lsp_fallback = true, async = true, timeout_ms = 1000 }, function(err)
+					if not err then
+						if vim.startswith(string.lower(mode), "v") then
+							vim.api.nvim_feedkeys(
+								vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+								"n",
+								false
+							)
+						end
+					end
+				end)
+			else
+				require("conform").format({
+					lsp_fallback = true,
+					async = true,
+					timeout_ms = 1000,
+				})
+			end
+		end, bufopts)
+	end,
 })
 
--- =========================
--- Ruff LSP
--- =========================
-vim.lsp.config("ruff", {
-  cmd = { "ruff", "server" },
-  filetypes = { "python" },
-  root_markers = {
-    "pyproject.toml",
-    "ruff.toml",
-    ".git",
-  },
+vim.lsp.enable({
+	"clangd",
+	"clojure_lsp",
+	"lua_ls",
+	"ocamllsp",
+	"fennel_language_server",
+	"tinymist",
+	"roc_ls",
+	"rust_analyzer",
+	"zls",
+	"gopls",
 })
-
--- =========================
--- Pyright LSP
--- =========================
-vim.lsp.config("pyright", {
-  root_markers = {
-    "pyproject.toml",
-    "setup.py",
-    "setup.cfg",
-    "requirements.txt",
-    ".git",
-  },
-  settings = {
-    python = {
-      analysis = {
-        typeCheckingMode = "basic",
-        autoSearchPaths = true,
-        useLibraryCodeForTypes = true,
-      },
-    },
-  },
-})
-
--- =========================
--- Lua LSP
--- =========================
-vim.lsp.config("lua_ls", {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim" },
-      },
-      workspace = {
-        checkThirdParty = false,
-      },
-    },
-  },
-})
-
--- =========================
--- Enable servers
--- =========================
-vim.lsp.enable(lsp_servers)
