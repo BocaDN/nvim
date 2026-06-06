@@ -13,8 +13,7 @@ require("plugins.commentary-vim")
 require("plugins.fzf")
 require("plugins.oil")
 require("plugins.toggleterm")
-
--- require("plugins.colorschemes.everforest") -- does not work
+require("plugins.indent-blankline")
 
 require("core.keymaps")
 require("core.functions")
@@ -22,7 +21,5 @@ require("core.options")
 require("core.autocmds")
 require("core.disabled")
 
-
-
-
+-- require("plugins.colorschemes.everforest") -- does not work
 

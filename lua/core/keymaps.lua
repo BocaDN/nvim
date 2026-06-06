@@ -125,24 +125,36 @@ keymap.set('n', '<leader>fs', ":FzfLua lsp_document_symbols<CR>", {})
 -- 	function() require('telescope').extensions.refactoring.refactors() end
 -- )
 
--- Note that not all refactor support both normal and visual mode
--- LSP
-keymap.set('n', '<leader>gg', '<cmd>lua vim.lsp.buf.hover()<CR>')
-keymap.set('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-keymap.set('n', '<leader>gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-keymap.set('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-keymap.set('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-keymap.set('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-keymap.set('n', '<leader>gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-keymap.set('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
-keymap.set('v', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
-keymap.set('n', '<leader>ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-keymap.set('n', '<leader>gl', '<cmd>lua vim.diagnostic.open_float()<CR>')
-keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-keymap.set('i', '<C-Space>', '<cmd>lua vim.lsp.buf.completion()<CR>')
+-- LSP core actions
+keymap('n', '<leader>gg', vim.lsp.buf.hover)
+keymap('n', '<leader>gd', vim.lsp.buf.definition)
+keymap('n', '<leader>gD', vim.lsp.buf.declaration)
+keymap('n', '<leader>gi', vim.lsp.buf.implementation)
+keymap('n', '<leader>gt', vim.lsp.buf.type_definition)
+keymap('n', '<leader>gr', vim.lsp.buf.references)
+keymap('n', '<leader>gs', vim.lsp.buf.signature_help)
+
+-- Rename / actions
+keymap('n', '<leader>rn', vim.lsp.buf.rename)
+keymap('n', '<leader>ga', vim.lsp.buf.code_action)
+
+-- Formatting (recommended modern form)
+keymap({ 'n', 'v' }, '<leader>gf', function()
+  vim.lsp.buf.format({ async = true })
+end)
+
+-- Diagnostics
+keymap('n', '<leader>gl', vim.diagnostic.open_float)
+keymap('n', '<leader>gp', vim.diagnostic.goto_prev)
+keymap('n', '<leader>gn', vim.diagnostic.goto_next)
+
+-- Document symbols
+keymap('n', '<leader>tr', vim.lsp.buf.document_symbol)
+
+-- If you use LSP completion API:
+keymap('i', '<C-Space>', function()
+  vim.lsp.completion.get()
+end)
 
 -- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
 -- keymap.set("n", '<leader>go', function()
