@@ -5,7 +5,8 @@ require("options")
 require("keymaps")
 
 -- load custom functions
-require("functions")
+require("functions.functions")
+require("functions.jupysync")
 
 -- Set LSP
 require("lsp")

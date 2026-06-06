@@ -5,7 +5,7 @@ local lint = require("lint")
 
 -- NOTE: Install linters with Mason
 lint.linters_by_ft = {
-	python = { "mypy" },
+	python = { "flake8" },
 }
 
 -- When to trigger lint? I bind it to some events as follows:
