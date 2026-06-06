@@ -1,20 +1,4 @@
-vim.api.nvim_create_user_command("JupySync", function()
-  local file = vim.fn.expand("%:p")
-
-  if file == "" then
-    print("No file detected")
-    return
-  end
-
-  local cmd = "jupytext --sync " .. vim.fn.shellescape(file)
-  local output = vim.fn.system(cmd)
-
-  if vim.v.shell_error == 0 then
-    print("Jupytext sync OK")
-  else
-    print("Jupytext sync failed:\n" .. output)
-  end
-end, {})
+-- JupySync command intentionally removed here; use `functions/jupysync.lua` for full behavior
 
 function Todo_toggle()
   local line = vim.api.nvim_get_current_line()
